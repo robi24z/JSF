@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>Ajax JSF Example</title>
+</h:head>
+<h:body>
+	<h3>JSF 2.2 Ajax Example</h3>
+	<h:form>
+
+		<!-- Labels -->
+
+
+		<h:outputText value="Label" style="color:red"></h:outputText>
+		<br></br>
+		<br></br>
+
+
+		<!-- Input text-->
+
+		<h:inputText id="text" value="Text Field" size="30" autocomplete="off"
+			readonly="false" style="color:blue"></h:inputText>
+		<br></br>
+		<br></br>
+
+
+		<!--Text area  -->
+
+
+		<h:inputTextarea id="area" cols="40" rows="10" value="Text Area"
+			style="color:violet"></h:inputTextarea>
+		<br></br>
+		<br></br>
+
+
+		<!-- Password -->
+
+
+		<h:outputText value="Password : " style="color:red"></h:outputText>
+		<h:inputSecret size="30" maxlength="10"></h:inputSecret>
+		<br></br>
+		<br></br>
+
+
+		<!-- Checkbox -->
+		
+		
+		Checked<h:selectBooleanCheckbox value="true"></h:selectBooleanCheckbox>
+		Unchecked<h:selectBooleanCheckbox value="false"></h:selectBooleanCheckbox>
+		<br></br>
+		<br></br>
+		<h:selectManyCheckbox>
+			<f:selectItem itemValue="1" itemLabel="Number 1"></f:selectItem>
+			<f:selectItem itemValue="2" itemLabel="Number 2"></f:selectItem>
+		</h:selectManyCheckbox>
+		<br></br>
+		<br></br>
+
+
+		<!-- Radio Button  -->
+
+
+		<h:selectOneRadio>
+			<f:selectItem itemValue="value 1" itemLabel="Radio 1"></f:selectItem>
+			<f:selectItem itemValue="value 2" itemLabel="Radio 2"></f:selectItem>
+		</h:selectOneRadio>
+		<br></br>
+		<br></br>
+
+
+		<!-- Combobox -->
+
+
+		<h:selectOneMenu value="" style="width:140px;">
+			<f:selectItem itemValue="0" itemLabel="Select"></f:selectItem>
+			<f:selectItem itemValue="1" itemLabel="Value 1"></f:selectItem>
+			<f:selectItem itemValue="2" itemLabel="Value 2"></f:selectItem>
+		</h:selectOneMenu>
+		<br></br>
+		<br></br>
+		<h:selectOneListbox>
+			<f:selectItem itemValue="1" itemLabel="Value 1"></f:selectItem>
+			<f:selectItem itemValue="2" itemLabel="Value 2"></f:selectItem>
+		</h:selectOneListbox>
+		<br></br>
+		<br></br>
+
+
+		<!-- Button -->
+		<h:commandButton id="submit" value="Submit"></h:commandButton>
+
+
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,22 @@
+<hibernate-mapping>
+	<class name="com.FrameWrkFullPrject.model.StudentDetails" table="STUDENTDETAILS">
+		<id name="studentId" type="java.lang.Long">
+			<column name="STUDENTID"></column>
+			<generator class="sequence">
+				<param name="sequence">STUDENTDETAILS_SEQ</param>
+			</generator>
+		</id>
+		<property name="slno" type="java.lang.String">
+			<column name="SLNO"></column>
+		</property>
+		<property name="name" type="java.lang.String">
+			<column name="NAME"></column>
+		</property>
+		<property name="subjectId" type="java.lang.Long">
+			<column name="SUBJECTID"></column>
+		</property>
+		<property name="age" type="java.lang.Long">
+			<column name="AGE"></column>
+		</property>
+	</class>
+</hibernate-mapping>

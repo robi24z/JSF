@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a4j="http://richfaces.org/a4j">
+<h:head>
+	<title>Design Code</title>
+	<script>
+		function validation() {
+			alert(document.getElementById("message").value);
+		}
+		function fieldEmpty() {
+			var dsgCode = document.getElementById("formId:dsgnCode").value;
+			var dsgStyl = document.getElementById("formId:dsgnStyle_input").value;
+			var ornmnt = document.getElementById("formId:ornament_input").value;
+			var crpt = document.getElementById("formId:crpt_input").value;
+			if (dsgCode == "" || dsgCode == null) {
+				document.getElementById("dsgValtn").innerHTML = "* design code required";
+				return false;
+			} else if (dsgStyl == "" || dsgStyl == null) {
+				document.getElementById("stylValtn").innerHTML = "* design style required";
+				return false;
+			} else if (ornmnt == "" || ornmnt == null) {
+				document.getElementById("ornmntValtn").innerHTML = "* ornament required";
+				return false;
+			} else if (crpt == "" || crpt == null) {
+				document.getElementById("crptValtn").innerHTML = "* crpt required";
+				return false;
+			}
+			return true;
+		}
+		function dsgnCdValdtn() {
+			var msg = document.getElementById("message").value;
+			if (msg == "Design Code Already Exist") {
+				document.getElementById("dsgValtn").innerHTML = "Design Code Already Exist";
+				return false;
+			} else {
+				document.getElementById("dsgValtn").innerHTML = "";
+			}
+			return true
+		}
+	</script>
+</h:head>
+<h:body>
+	<h2 align="center">Design Code Master</h2>
+	<h:form id="formId">
+		<t:saveState value="#{design.searchClick}" />
+		<t:saveState value="#{design.saveClick}" />
+		<t:saveState value="#{design.dsgnStyl}" />
+		<t:saveState value="#{design.designCode}" />
+		<t:saveState value="#{design.tableOnLoad}" />
+		<a4j:jsFunction name="DsgCdValdtn" oncomplete="dsgnCdValdtn();"
+			render="divMsg">
+			<a4j:param name="p" assignTo="#{design.dsgCheck}"></a4j:param>
+		</a4j:jsFunction>
+		<h:panelGroup id="panel">
+			<table align="center">
+				<tr style="height: 350px">
+					<td>
+						<table>
+							<tr style="height: 175px">
+								<td><h:outputText value="Design Code :"></h:outputText></td>
+								<td><p:inputText id="dsgnCode"
+										value="#{design.designCode.dsgnCode}"
+										rendered="#{!design.saveClick}"
+										onkeyup="DsgCdValdtn(this.value)"></p:inputText> <p:autoComplete
+										id="dsgCodeCombo" forceSelection="true" scrollHeight="250"
+										value="#{design.designCode.dsgnCode}"
+										rendered="#{design.saveClick}"
+										completeMethod="#{design.allDsgCodeLoad}">
+										<p:ajax event="itemSelect"
+											listener="#{design.selectedDsgCde}"
+											update="panel,tablePanel"></p:ajax>
+									</p:autoComplete></td>
+								<td></td>
+								<td style="width: 175px"></td>
+								<td><h:outputText value="Design Style :"></h:outputText></td>
+								<td><p:autoComplete id="dsgnStyle" forceSelection="true"
+										scrollHeight="250" value="#{design.designCode.dsgnStyle}"
+										completeMethod="#{design.allDesignStyle}"
+										disabled="#{design.saveClick}">
+										<p:ajax event="itemSelect"
+											listener="#{design.selectedStyl}"></p:ajax>
+									</p:autoComplete></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><span id="dsgValtn" style="color: red"></span></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><span id="stylValtn" style="color: red"></span></td>
+
+							</tr>
+							<tr style="height: 150px">
+								<td><h:outputText value="Ornament :"></h:outputText></td>
+								<td><p:autoComplete id="ornament" forceSelection="true"
+										scrollHeight="250" value="#{design.designCode.ornament}"
+										completeMethod="#{design.ornamentList}"
+										disabled="#{design.saveClick}"></p:autoComplete></td>
+								<td></td>
+								<td></td>
+								<td><h:outputText value="Crpt :"></h:outputText></td>
+								<td><p:inputNumber id="crpt" decimalPlaces="3"
+										value="#{design.designCode.crpt}"
+										disabled="#{design.saveClick}"></p:inputNumber></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><span id="ornmntValtn" style="color: red"></span></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><span id="crptValtn" style="color: red"></span></td>
+							</tr>
+						</table>
+					</td>
+					<td>
+						<table>
+							<tr>
+								<td><p:commandButton value="Save" id="save"
+										partialSubmit="true" disabled="#{design.saveClick}"
+										action="#{design.onSaveClick}"
+										update="panel,divMsg,tablePanel" oncomplete="validation();"
+										onclick="return fieldEmpty();"></p:commandButton></td>
+							</tr>
+							<tr>
+								<td><p:commandButton value="Search" id="search"
+										disabled="#{design.searchClick}"
+										action="#{design.onSearchClick}" update="panel"></p:commandButton></td>
+							</tr>
+							<tr>
+								<td><p:commandButton value="Edit" id="edit"
+										disabled="#{!design.saveClick}" action="#{design.onEditClick}"
+										update="panel"></p:commandButton></td>
+							</tr>
+							<tr>
+								<td><p:commandButton value="Delete" id="delete"
+										disabled="#{!design.saveClick}"
+										action="#{design.onDeleteClick}"
+										update="panel,tablePanel,divMsg" oncomplete="validation();"></p:commandButton></td>
+							</tr>
+							<tr>
+								<td><p:commandButton value="Cancel" id="cancel"
+										action="#{design.onCancelClick}" update="panel,tablePanel"></p:commandButton></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</h:panelGroup>
+		<h:panelGroup id="tablePanel">
+			<p:dataTable id="table" var="vars" scrollable="true"
+				scrollHeight="270" scrollRows="5" rowIndexVar="index"
+				selectionMode="single" rowKey="#{vars}"
+				value="#{design.tableOnLoad}">
+				<p:column headerText="Index" style="text-align:center">
+					<h:outputText value="#{index+1}" id="index"></h:outputText>
+				</p:column>
+				<p:column headerText="Design Code" style="text-align:center">
+					<h:outputText id="designstylee" value="#{vars.dsgnCode}"></h:outputText>
+				</p:column>
+				<p:column headerText="Design Style" style="text-align:center">
+					<h:outputText id="designstyle" value="#{vars.dsgnStyle}"></h:outputText>
+				</p:column>
+				<p:column headerText="Ornament" style="text-align:center">
+					<h:outputText id="ornmnt" value="#{vars.ornament}"></h:outputText>
+				</p:column>
+				<p:column headerText="Crpt" style="text-align:center">
+					<h:outputText id="crt" value="#{vars.crpt}"></h:outputText>
+				</p:column>
+			</p:dataTable>
+		</h:panelGroup>
+	</h:form>
+	<t:div id="divMsg">
+		<h:inputHidden id="message" value="#{design.valdtn}"></h:inputHidden>
+	</t:div>
+</h:body>
+</html>

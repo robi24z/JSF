@@ -1,0 +1,84 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/task 
+http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+	<context:component-scan base-package="com.test2.*" />
+
+
+	<bean id="StudentDetails" class="com.FrameWrkFullPrject.model.StudentDetails"></bean>
+
+	<bean id="DesignCode" class="com.FrameWrkFullPrject.model.DesignCode"></bean>
+
+
+	<!-- User Service Declaration -->
+
+	<bean id="StudentDetailsServiceImpl" class="com.test2.service.impl.StudentDetailsServiceImpl">
+		<property name="StudentDetailsDao" ref="StudentDetailsDao"></property>
+	</bean>
+
+	<bean id="DesignCodeServiceImpl" class="com.test2.service.impl.DesignCodeServiceImpl">
+		<property name="DesignCodeDao" ref="DesignCodeDao"></property>
+	</bean>
+
+	<!-- User DAO Declaration -->
+
+	<bean id="StudentDetailsDao" class="com.test2.dao.hibernate.StudentDetailsDaoImpl">
+		<property ref="SessionFactory" name="sessionfactory"></property>
+	</bean>
+
+	<bean id="DesignCodeDao" class="com.test2.dao.hibernate.DesignCodeDaoImpl">
+		<property name="SessionFactory" ref="SessionFactory"></property>
+	</bean>
+
+
+	<task:annotation-driven />
+
+	<!-- Data Source Declaration -->
+
+	<bean id="DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:frsp" />
+		<property name="user" value="test" />
+		<property name="password" value="test" />
+
+		<property name="maxStatements" value="0" />
+
+
+	</bean>
+
+	<!-- Session Factory Declaration -->
+	<bean id="SessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="DataSource" />
+		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.use_sql_comments">false</prop>
+
+			</props>
+		</property>
+	</bean>
+
+	<!-- Enable the configuration of transactional behavior based on annotations -->
+	<tx:annotation-driven transaction-manager="txManager" />
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
+
+
+
+</beans>

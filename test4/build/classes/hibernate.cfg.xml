@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+		<property name="connection.username">system</property>
+		<property name="connection.password">sys9808</property>
+		<property name="connection.url">jdbc:oracle:thin:@localhost:frsp</property>
+		<property name="dialect">org.hibernate.dialect.Oracle10gDialect</property>
+		<property name="myeclipse.connection.profile">oracle.jdbc.driver.OracleDriver</property>
+
+		<property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+		<property name="hibernate.id.new_generator_mappings">false</property>
+
+		<property name="hibernate.current_session_context_class">thread</property>
+		<property name="hibernate.show_sql">false</property>
+		<property name="hibernate.format_sql">false</property>
+		<property name="hibernate.use_sql_comments">false</property>
+
+
+		<property name="hibernate.c3p0.acquire_increment">1</property>
+		<property name="hibernate.c3p0.idle_test_period">100</property>
+
+		<property name="hibernate.c3p0.max_statements">0</property>
+
+		<property name="hibernate.c3p0.timeout">100</property>
+
+
+		 <!-- Hibernate Configuration Mapping with Orcle -->
+
+		
+		
+	</session-factory>
+
+</hibernate-configuration>

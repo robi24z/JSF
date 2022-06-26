@@ -1,0 +1,22 @@
+<hibernate-mapping>
+	<class name="com.FrameWrkFullPrject.model.DesignCode" table="ORNMNTDATA">
+		<id name="ornmntDataId" type="java.lang.Long">
+			<column name="ORNMNTDATAID"></column>
+			<generator class="sequence">
+				<param name="sequence">DESIGNCODE_SEQ</param>
+			</generator>
+		</id>
+		<property name="dsgnCode" type="java.lang.String">
+			<column name="DSGNCODE"></column>
+		</property>
+
+		<property name="ornmntId" type="java.lang.Long">
+			<column name="ORNMNTID"></column>
+		</property>
+
+		<property name="crpt" type="java.lang.Double">
+			<column name="CRPT"></column>
+		</property>
+
+	</class>
+</hibernate-mapping>

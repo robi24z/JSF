@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Ajax JSF Example</title>
+</h:head>
+<h:body>
+	<h3>JSF 2.2 Ajax Example</h3>
+	<h:form>
+
+
+		Input Text : <p:inputText value="" placeholder="Search"></p:inputText>
+		<br></br>
+		<br></br>
+
+
+		Password : <p:password id="pass" value=""></p:password>
+		<br></br>
+		<br></br>
+
+
+		CheckBox : <p:selectBooleanCheckbox value="true" itemLabel="Ajax"></p:selectBooleanCheckbox>
+		<br></br>
+		<br></br>
+
+
+		ComboBox : <p:autoComplete id="combo" value="" var="Country"
+			forceSelection="true" scrollHeight="250">
+			<!-- completeMethod="" -->
+		</p:autoComplete>
+		<br></br>
+		<br></br>
+
+
+		Calender : <p:calendar id="cal" showOn="button" value=""
+			pattern="dd-MM-yy"></p:calendar>
+		<br></br>
+		<br></br>
+
+
+		Radio Button : <p:selectOneRadio id="radio" value="">
+			<f:selectItem itemLabel="Option 1" itemValue="One"></f:selectItem>
+			<f:selectItem itemLabel="Option 2" itemValue="Two"></f:selectItem>
+		</p:selectOneRadio>
+		<br></br>
+		<br></br>
+
+		Number Field : <p:inputNumber id="num" value="" decimalPlaces="3"></p:inputNumber>
+		<br></br>
+		<br></br>
+		<p:commandButton value="submit"></p:commandButton>
+
+
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a4j="http://richfaces.org/ui">
+<h:head>
+	<title>Student</title>
+	<script>
+	function valdtnMsg(){
+		
+		var value=document.getElementById("message").value;
+		alert("v==="+value);
+	}
+	function fieldEmpty(){
+		var slno=document.getElementById("formId:slNoText").value;
+		var name=document.getElementById("formId:name").value;
+		var dept=document.getElementById("formId:department_input").value;
+		var sub=document.getElementById("formId:subject_input").value;
+		var age=document.getElementById("formId:age_input").value;
+		/* alert("dept=="+dept+" sub=="+sub+" age=="+age); */
+		if(slno==""||slno==null){
+			document.getElementById("slValdtn").innerHTML="Slno required";
+			return false;
+		}
+		else if(name==""||name==null){
+			document.getElementById("nameValdtn").innerHTML="Name required";
+			return false;
+		}
+		else if(dept==""||dept==null){
+			
+			document.getElementById("deptValdtn").innerHTML="Department required";
+			return false;
+		}
+		else if(sub==""||sub==null){
+			document.getElementById("subValdtn").innerHTML="Subject required";
+			return false;
+		}
+		else if(age==""||age==null){
+			document.getElementById("ageValdtn").innerHTML="Age required";
+			return false;
+		}
+		return true;
+	}
+	</script>
+</h:head>
+<h:body>
+	<h2 align="center">Student Registration Form</h2>
+	<h:form id="formId">
+		<t:saveState value="#{student.stud}" />
+		<t:saveState value="#{student.deptName}" />
+		<t:saveState value="#{student.searchClick}" />
+		<t:saveState value="#{student.saveClick}"/>
+		<t:saveState value="#{student.tableData}"/>
+		<a4j:jsFunction name="SlnoValdtn"  oncomplete="alert('Tst')"  >
+			<a4j:param assignTo="#{student.slNoChecking}"></a4j:param>
+		</a4j:jsFunction>
+		<h:panelGroup id="panel">
+			<table align="center">
+				<tr style="height: 300px">
+					<td><table>
+							<tr></tr>
+							<tr style="height: 150px">
+								<td><h:outputText value="SL no:"></h:outputText></td>
+								<td><p:inputText id="slNoText" value="#{student.stud.slno}"
+										rendered="#{!student.saveClick}" onchange="SlnoValdtn(this.value);"></p:inputText> <p:autoComplete
+										id="slNoCombo" scrollHeight="250" value="#{student.stud.slno}"
+										completeMethod="#{student.allSlNoLoad}"
+										rendered="#{student.saveClick}">
+										<p:ajax event="itemSelect"
+											listener="#{student.getSelectedSlNo}" update="panel,tablePanel"></p:ajax>
+									</p:autoComplete>	
+									</td>
+								<td></td>
+								<td><h:outputText value="Name:"></h:outputText></td>
+								<td><p:inputText id="name" value="#{student.stud.name}"
+										disabled="#{student.saveClick}"></p:inputText></td>
+								<td></td>
+								<td><h:outputText value="Department:"></h:outputText></td>
+								<td><p:autoComplete id="department" forceSelection="true"
+										scrollHeight="250" value="#{student.stud.department}"
+										completeMethod="#{student.allDepartmentLoad}"
+										disabled="#{student.saveClick}">
+										<p:ajax event="itemSelect"
+											listener="#{student.getSelectedDept}"></p:ajax>
+									</p:autoComplete></td>
+							</tr>
+							<tr>
+							<td></td>
+							<td><span id="slValdtn" style="color:red"></span></td>
+							<td><span id="nameValdtn" style="color:red"></span></td>
+							<td><span id="deptValdtn" style="color:red"></span></td>
+							</tr>
+							
+							<tr style="height: 150px">
+							
+								<td><h:outputText value="Subject:"></h:outputText></td>
+								<td><p:autoComplete id="subject" forceSelection="true"
+										scrollHeight="250" value="#{student.stud.subject}"
+										completeMethod="#{student.subjectNames}"
+										disabled="#{student.saveClick}">
+									</p:autoComplete></td>
+								<td></td>
+								<td><h:outputText value="Age:"></h:outputText></td>
+								<td><p:inputNumber id="age" value="#{student.stud.age}"
+										decimalPlaces="0" disabled="#{student.saveClick}"></p:inputNumber></td>
+							</tr>
+							<tr>
+							<td></td>
+							<td><span id="subValdtn" style="color:red"></span></td>
+							<td><span id="ageValdtn" style="color:red"></span></td>
+							</tr>
+						</table></td>
+					
+					<td>
+						<table>
+							<tr>
+								<td><p:commandButton value="Save" id="save"
+										disabled="#{student.saveClick}"
+										action="#{student.onSaveClick}" update="panel,tablePanel,divMsg" oncomplete="valdtnMsg();" onclick="return fieldEmpty();" ></p:commandButton></td>
+							</tr>
+							<tr>
+								<td><p:commandButton value="Search" id="search"
+										disabled="#{student.searchClick}" 
+										action="#{student.onSearchClick}" update="panel"></p:commandButton></td>
+							</tr>
+							<tr>
+								<td><p:commandButton value="Edit" id="edit"
+										disabled="#{!student.saveClick}"
+										action="#{student.onEditClick}" update="panel">
+										</p:commandButton></td>
+							</tr>
+							<tr>
+								<td><p:commandButton value="Delete" id="delete"
+										disabled="#{!student.saveClick}" action="#{student.onDelete}" update="panel,tablePanel,divMsg" oncomplete="valdtnMsg();"></p:commandButton></td>
+							</tr>
+							<tr>
+								<td><p:commandButton value="Cancel" id="cancel"
+										action="#{student.onCancelClick}" update="panel,tablePanel">
+									</p:commandButton></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		
+		</h:panelGroup>
+		<h:panelGroup id="tablePanel">
+			<p:dataTable id="studentTable" var="vars" scrollable="true"
+				scrollHeight="270" scrollRows="5" rowIndexVar="index"
+				selectionMode="single" rowKey="#{vars}" value="#{student.tableData}">
+				
+				<p:column headerText="Index" style="text-align:center;">
+					<h:outputText value="#{index + 1}" id="indexx"></h:outputText>
+				</p:column>
+
+				<p:column headerText="Slno" style="text-align:center;">
+					<h:outputText value="#{vars.slno}"></h:outputText>
+				</p:column>
+
+				<p:column headerText="Name" style="text-align:center;">
+					<h:outputText value="#{vars.name}"></h:outputText>
+				</p:column>
+
+				<p:column headerText="Department" style="text-align:center;">
+					<h:outputText value="#{vars.department}"></h:outputText>
+				</p:column>
+
+				<p:column headerText="Subject" style="text-align:center;">
+					<h:outputText value="#{vars.subject}"></h:outputText>
+				</p:column>
+
+				<p:column headerText="Age" style="text-align:center;">
+					<h:outputText value="#{vars.age}"></h:outputText>
+				</p:column>
+			</p:dataTable>
+		</h:panelGroup>
+	</h:form>
+		<t:div id="divMsg">
+			<h:inputHidden value="#{student.valdtnMsg}" id="message"></h:inputHidden>
+			</t:div>
+</h:body>
+</html>
